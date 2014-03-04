@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "mongo.h"
 
+
 static void insert(mongo *conn) {
 
 	bson query;
