@@ -1,7 +1,7 @@
 import string
 import re
 
-inputfile = open('test.list','r')
+inputfile = open('actors.list','r')
 outputfile = open('test.csv', 'w')
 # for i in range(4): inputfile.next() Use this when you want to skip the introductory stuff
 
@@ -26,12 +26,8 @@ def parse_actor(text):
 		text = text.strip()
 		full_list[actor[0]].append(text)
 
-for i in range(15336597):
-	if i < 240 or i > 15336597:
-		inputfile.next()
-	else:
-		line = inputfile.read
-		parse_actor(line)
+for line in inputfile.readlines():
+	parse_actor(line)
 
 print full_list
 inputfile.close()
