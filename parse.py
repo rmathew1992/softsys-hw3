@@ -1,33 +1,40 @@
 import string
 import re
 
-inputfile = open('actors.list','r')
-outputfile = open('test.csv', 'w')
-# for i in range(4): inputfile.next() Use this when you want to skip the introductory stuff
-
-#Names start only with symbols,characters, and numbers
-char = []
-for i in range(33,127):
-		char.append(chr(i))
-full_list = {'temp':'movie'}
-#A parse function returns actor names
-actor = ['temp']
-def parse_actor(text):
+def parse_actor(text, dictionary, initial):
+	
+	#A parse function returns actor names
 	temp = []
 	if text.startswith(tuple(char)):
 		columns = text.split("	",1)
 		for i in columns:
 			i = re.sub(r"\t", "", i)
 			temp.append(i.split())
-		actor[0] = ' '.join(temp.pop(0))
+		initial[0] = ' '.join(temp.pop(0))
 		movie = ' '.join(temp.pop(0))
-		full_list[actor[0]] = [movie]
+		dictionary[initial[0]] = [movie]
 	elif text.startswith('	'): 
 		text = text.strip()
-		full_list[actor[0]].append(text)
+		dictionary[initial[0]].append(text)
 
-for line in inputfile.readlines():
-	parse_actor(line)
+def read_file(file_name, parsed):
+	inputfile = open(file_name,'r')
+	initial = ['temp']
+	for line in inputfile.readlines():
+		parse_actor(line, parsed, initial)
+	inputfile.close()
+	return parsed
 
-print full_list
-inputfile.close()
+#Names start only with symbols,characters, and numbers
+char = []
+for i in range(33,127):
+	char.append(chr(i))
+
+actors = {'temp':'movie'}
+actresses = {'temp': 'movie'}
+
+
+# List files must have excess information trimmed out
+actors = read_file('actors.list', actors)
+actresses = read_file('actresses.list', actresses)
+print actresses
