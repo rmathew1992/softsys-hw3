@@ -8,70 +8,71 @@ struct node {
 };
 
 struct node *getMovies(char *actorName, mongo *conn) {
+	bson query[1];
+	mongo_cursor cursor[1];
 
-	bson query = getActorQuery(actorName);
-	bson fields = getActorFields();
-	mongo_cursor * cursor = mongo_find(conn, "test.a", &query, &fields, 0,0,0);
+	bson_init( query );
+	//bson_append_string(query, "actor")
+	bson_append_string( query, "actors", actorName);
+	bson_finish( query );
 
-	struct node *root;
-	root = (struct node *) malloc(sizeof(struct node));
-	root->next = 0;	
-	struct node *conductor;
-	conductor = root;
+	struct node *root2;
+	root2 = (struct node *) malloc(sizeof(struct node));
+	root2 -> next = 0;
+	struct node *conductor2;
+	conductor2 = root2;
 
-	bson *doc;
-	while (mongo_cursor_next(cursor) == MONGO_OK) {
-		doc = (bson *) mongo_cursor_bson(cursor);
-		bson_iterator i[1];
-		bson_iterator_init(i,doc);
-		if (bson_iterator_next(i) != BSON_EOO) {
-			conductor->x = bson_iterator_string(i);
+	//mongo_cursor_init(cursor, conn, "test.m")
+	mongo_cursor_init( cursor, conn, "test2.m" );
+	mongo_cursor_set_query( cursor, query );
+
+	while( mongo_cursor_next( cursor ) == MONGO_OK ) {
+		bson_iterator iterator[1];
+		if ( bson_find( iterator, mongo_cursor_bson( cursor ), "title" )) {
+			conductor2->x = bson_iterator_string(iterator);
+			conductor2->next = malloc(sizeof(struct node));
+			conductor2 = conductor2->next;
 		}
-		while (bson_iterator_next(i) != BSON_EOO) {
-			conductor->next = malloc(sizeof(struct node));
-			conductor = conductor->next;
-			conductor->x = bson_iterator_string(i);
-		}
-		conductor->next = 0;
-
+		conductor2->next = 0;
 	}
-	mongo_cursor_destroy(cursor);
-	return root;
+
+	bson_destroy( query );
+	mongo_cursor_destroy( cursor );
+	return root2;
 }
 
 struct node *getActors(char *movieName, mongo *conn) {
 
 	//char movieName[] = "inglorious basterds";
-	bson query = getMovieQuery(movieName);
-	bson fields = getMovieFields();
-	mongo_cursor * cursor = mongo_find(conn, "test.m", &query, &fields, 0,0,0);
+
+	bson query[1];
+	mongo_cursor cursor[1];
+
+	bson_init( query );
+	bson_append_string( query, "movies", movieName);
+	bson_finish( query );
 
 	struct node *root;
 	root = (struct node *) malloc(sizeof(struct node));
-	root->next = 0;	
+	root -> next = 0;
 	struct node *conductor;
 	conductor = root;
 
-	bson *doc;
-	while (mongo_cursor_next(cursor) == MONGO_OK) {
-		doc = (bson *) mongo_cursor_bson(cursor);
-		bson_iterator i[1];
-		bson_iterator_init(i,doc);
-		if (bson_iterator_next(i) != BSON_EOO) {
-			conductor->x = bson_iterator_string(i);
-			//printf("valueList: %s\n", conductor->x);
-		}
-		while (bson_iterator_next(i) != BSON_EOO) {
+	mongo_cursor_init( cursor, conn, "test2.a" );
+	mongo_cursor_set_query( cursor, query );
+
+	while( mongo_cursor_next( cursor ) == MONGO_OK ) {
+		bson_iterator iterator[1];
+		if ( bson_find( iterator, mongo_cursor_bson( cursor ), "name" )) {
+			conductor->x = bson_iterator_string(iterator);
 			conductor->next = malloc(sizeof(struct node));
 			conductor = conductor->next;
-			conductor->x = bson_iterator_string(i);
-			//printf("valueList: %s\n", conductor->x);
 		}
-
 		conductor->next = 0;
-
 	}
-	mongo_cursor_destroy(cursor);
+
+	bson_destroy( query );
+	mongo_cursor_destroy( cursor );
 	return root;
 }
 

@@ -15,14 +15,14 @@ int main() {
 			case MONGO_CONN_NOT_MASTER: 	printf("not master\n"); return 1;
 		}
 	}
-	char target1[] = "brad pitt";
-	char target2[] = "jamie foxx";	
+	char target1[] = "Brad Pitt";
+	char target2[] = "Jamie Foxx";	
 
 	if (strcmp(target1, target2) == 0) { printf("same guy, dipshit\n"); exit(1); }
 
 	printf("actor for inglorious basterds\n");
 	struct node *root;
-	root = getActors("inglorious basterds", conn);
+	root = getActors("Inglourious Basterds", conn);
 	struct node *conductor;
 	conductor = root;
 	if (conductor != 0) {
@@ -30,9 +30,8 @@ int main() {
 			printf("%s\n", conductor->x);
 			conductor = conductor->next;
 		}
-		printf("%s\n", conductor->x);
 	}
-
+	
 	printf("movies for brad pitt\n");
 	struct node *root2;
 	root2 = getMovies(target1, conn);
@@ -43,7 +42,6 @@ int main() {
 			printf("%s\n", conductor2->x);
 			conductor2 = conductor2->next;
 		}
-		printf("%s\n", conductor2->x);
 	}
 	
 	mongo_destroy(conn);
