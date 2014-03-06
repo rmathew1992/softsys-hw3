@@ -58,6 +58,7 @@ def read_file(file_name, parsed):
 
 connection = MongoClient()
 db = connection.sofSys3
+connection['sofSys3'].drop_collection('actorsToMovies')
 aToM = db.actorsToMovies
 aToM.create_index([("actor", ASCENDING), ("movies", ASCENDING)])
 #Names start only with symbols,characters, and numbers

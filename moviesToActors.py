@@ -38,6 +38,7 @@ def read_file(file_name):
 connection = MongoClient()
 db = connection.sofSys3
 aToM = db.actorsToMovies
+connection['sofSys3'].drop_collection('moviesToActors')
 mToA = db.moviesToActors
 
 read_file('movies.list')
