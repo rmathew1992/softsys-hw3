@@ -40,7 +40,7 @@ def parseActorName (textLine):
 	return actor, movie
 
 def parseMovieName (textLine):
-	columns = textLine.split("(", 1)
+	columns = textLine.split(")", 1)
 	movie = columns[0]
 	movie = movie.strip()
 	return movie
