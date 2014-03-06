@@ -32,6 +32,7 @@ struct node *getMovies(char *actorName, mongo *conn) {
 			conductor = conductor->next;
 			conductor->x = bson_iterator_string(i);
 		}
+		conductor->next = 0;
 
 	}
 	mongo_cursor_destroy(cursor);
@@ -66,6 +67,8 @@ struct node *getActors(char *movieName, mongo *conn) {
 			conductor->x = bson_iterator_string(i);
 			//printf("valueList: %s\n", conductor->x);
 		}
+
+		conductor->next = 0;
 
 	}
 	mongo_cursor_destroy(cursor);
