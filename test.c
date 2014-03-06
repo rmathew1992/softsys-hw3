@@ -14,6 +14,28 @@ int searchfor(char *actor, struct node *list) {
 	return 0;
 }
 
+struct node *append(struct node *list1, struct node *list2) {
+
+	struct node *cond;
+	cond = list1;
+	printf("%s\n", cond->x);
+	while (cond->next != 0) {
+		cond = cond->next;
+	}
+	struct node *cond2;
+	cond2 = list2;
+	while(cond2->next != 0){
+		cond =(struct node*)cond->x;
+		cond2 = cond->next;
+	}
+	//cond->next = *list2;
+	//cond->next = malloc(sizeof(struct node));
+	//cond->next = list2;
+	
+	return list1;
+
+}
+
 
 int main() {
 
@@ -27,9 +49,15 @@ int main() {
 			case MONGO_CONN_NOT_MASTER: 	printf("not master\n"); return 1;
 		}
 	}
+
 	char actor1[] = "brad pitt";
 	char actor2[] = "jamie foxx";
 	char actor3[] = "christoph waltz";	
+	
+	struct node *masterList;
+	masterList = malloc(sizeof(struct node));
+	masterList->x = actor2;
+	masterList->next = 0;
 
 	if (strcmp(actor1, actor2) == 0) { printf("same guy, dipshit\n"); exit(1); }
 
@@ -41,18 +69,31 @@ int main() {
 	cond = movies;
 	
 	int found;
+	actors = getActors("inglorious basterds", conn);
+	masterList = append(masterList, actors);
+	//actors = getActors("inglorious basterds", conn );
+	//while(actors->next != 0){
+	//	actors = actors->next;
+	//}	
 	while (cond != NULL) {
 		actors = getActors((char*)cond->x, conn);
-		struct node *cond2;
-		cond2 = actors; 
-		found = searchfor(actor3,actors);
-		if(found ==1){
-			printf("laughs laughs asglkjfal\n");
-		}
+	//	masterList = append(masterList, actors);
+		//struct node *cond2;
+		//cond2 = actors; 
+		//found = searchfor(actor3,actors);
+		//if(found ==1){
+		//	printf("laughs laughs asglkjfal\n");
+		//}
 		cond = cond->next;
 	}
 
-	printf("%i\n", found);	
+	struct node *temp;
+	temp = masterList;
+	while (temp != NULL) {
+		printf("%s\n", temp->x);
+		temp = temp->next;
+	}
+	
 
 	mongo_destroy(conn);
 	return 0;
