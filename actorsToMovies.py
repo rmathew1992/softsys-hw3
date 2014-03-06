@@ -60,7 +60,8 @@ connection = MongoClient()
 db = connection.sofSys3
 connection['sofSys3'].drop_collection('actorsToMovies')
 aToM = db.actorsToMovies
-aToM.create_index([("actor", ASCENDING), ("movies", ASCENDING)])
+aToM.create_index([("actor", ASCENDING)])
+aToM.ensure_index("movies")
 #Names start only with symbols,characters, and numbers
 char = []
 for i in range(33,127):
