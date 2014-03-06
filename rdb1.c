@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "mongo.h"
 #include "listFunctions.h"
+#include <string.h>
 
 int main() {
 
@@ -14,6 +15,10 @@ int main() {
 			case MONGO_CONN_NOT_MASTER: 	printf("not master\n"); return 1;
 		}
 	}
+	char target1[] = "brad pitt";
+	char target2[] = "jamie foxx";	
+
+	if (strcmp(target1, target2) == 0) { printf("same guy, dipshit\n"); exit(1); }
 
 	printf("actor for inglorious basterds\n");
 	struct node *root;
@@ -30,7 +35,7 @@ int main() {
 
 	printf("movies for brad pitt\n");
 	struct node *root2;
-	root2 = getMovies("brad pitt", conn);
+	root2 = getMovies(target1, conn);
 	struct node *conductor2;
 	conductor2 = root2;
 	if (conductor2 != 0) {
