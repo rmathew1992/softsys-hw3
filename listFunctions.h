@@ -59,15 +59,13 @@ struct node *getActors(char *movieName, mongo *conn) {
 		bson_iterator_init(i,doc);
 		if (bson_iterator_next(i) != BSON_EOO) {
 			conductor->x = bson_iterator_string(i);
-			//printf("valueList: %s\n", conductor->x);
 		}
 		while (bson_iterator_next(i) != BSON_EOO) {
 			conductor->next = malloc(sizeof(struct node));
 			conductor = conductor->next;
 			conductor->x = bson_iterator_string(i);
-			//printf("valueList: %s\n", conductor->x);
 		}
-
+		conductor->next = malloc(sizeof(struct node));
 		conductor->next = 0;
 
 	}
