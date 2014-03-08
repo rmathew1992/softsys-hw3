@@ -1,3 +1,9 @@
+/* 
+March 2014
+Amanda Lee, Rachel Mathew, Mike Warner
+
+*/
+
 #include <stdio.h>
 #include "mongo.h"
 #include "listFunctions.h"

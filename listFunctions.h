@@ -18,7 +18,7 @@ struct node *getMovies(char *actorName, mongo *conn) {
 
 	struct node *root2;
 	root2 = (struct node *) malloc(sizeof(struct node));
-	root2 -> next = 0;
+	//root2 -> next = 0;
 	struct node *conductor2;
 	conductor2 = root2;
 
@@ -54,7 +54,7 @@ struct node *getActors(char *movieName, mongo *conn) {
 
 	struct node *root;
 	root = (struct node *) malloc(sizeof(struct node));
-	root -> next = 0;
+	//root -> next = 0;
 	struct node *conductor;
 	conductor = root;
 
