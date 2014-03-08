@@ -2,19 +2,14 @@ softsys-hw3
 ===========
 
 Database Population:
-
-actorsToMovies.py
-
-moviesToActors.py
+* actorsToMovies.py
+* moviesToActors.py
 
 
 Database Querying:
-
-listFunctionsFinal.h
-
-test.c
-
-rdb1.c
+*listFunctionsFinal.h
+*test.c
+*rdb1.c
 
 
 
